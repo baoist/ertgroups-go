@@ -70,9 +70,16 @@ func groupsCreate(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleRequests() {
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "8080"
+		log.Printf("Defaulting to port %s", port)
+	}
+
 	http.HandleFunc("/ping", ping)
 	http.HandleFunc("/create", groupsCreate)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":" + port, nil))
 }
 
 func main() {
