@@ -1,11 +1,12 @@
 package main
 
 import (
-	"net/http"
-	"log"
 	"encoding/json"
-	"io/ioutil"
 	"github.com/baoist/ertgroups/encoder"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
 )
 
 type CsvRequest struct {
