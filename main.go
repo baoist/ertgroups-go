@@ -33,7 +33,10 @@ func JSONError(w http.ResponseWriter, err string, code int) {
 
 func ping(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte("pong"))
+
+	pongJson := []byte(`{"message":"pong"}`)
+
+	w.Write(pongJson)
 }
 
 func groupsCreate(w http.ResponseWriter, r *http.Request) {
