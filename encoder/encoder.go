@@ -9,13 +9,14 @@ import (
 type Delimiters struct {
 	ColDelimRe string `json:"col_delimiter_regex"`
 	ColExtraRe string `json:"col_extra_character_regex"`
-	RowDelimRe string `json:"row_delimiter"`
+	RowDelimRe string `json:"row_delimiter_regex"`
 }
 
 type Group struct {
 	Players []string `json:"groups"`
 	Csv string `json:"csv"`
 	Delimiters Delimiters `json:"delimiters"`
+	SeparatedValues string `json:"separated_values"`
 	ErtCode string `json:"ert_code"`
 }
 
@@ -80,6 +81,25 @@ func (group *Group) assignPlayersToGroup() {
 	group.Players = players_arr
 }
 
+func (group *Group) formatRawSeparatedValues() {
+	tmp_players_str := ""
+
+	for _, player := range group.Players {
+		fmt.Println("player", player, player == "")
+		if player == "" {
+			continue
+		}
+
+		if len(tmp_players_str) > 0 {
+			tmp_players_str = fmt.Sprintf("%s,%s", tmp_players_str, player)
+		} else {
+			tmp_players_str = player
+		}
+	}
+
+	group.SeparatedValues = tmp_players_str
+}
+
 func (group *Group) format() string {
 	header := "EXRTRGR0"
 	tmp_player_arr := make([]string, 40, 40)
@@ -104,6 +124,7 @@ func CreateGroup(players_csv string, delimiters Delimiters) Group {
 	group.Delimiters = delimiters
 	group.Csv = players_csv
 	group.assignPlayersToGroup()
+	group.formatRawSeparatedValues()
 
 	return *group
 }

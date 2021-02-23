@@ -13,7 +13,7 @@ type CsvRequest struct {
 	Body string `json:"csv"`
 	ColDelimRe string `json:"col_delimiter_regex"`
 	ColExtraRe string `json:"col_extra_character_regex"`
-	RowDelimRe string `json:"row_delimiter"`
+	RowDelimRe string `json:"row_delimiter_regex"`
 }
 
 type JsonErr struct {
